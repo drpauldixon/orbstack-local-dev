@@ -15,7 +15,7 @@ A simple example develping Ansible locally using Rocky Linux 8 as a substitute f
 
 We will:
 
-- clone the repo
+- clone this repo
 - change to the repo directory
 - start a VM and configure it via the cloud config file: `vm_config.yaml`
 - change to the ansible directory
