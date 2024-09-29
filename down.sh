@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Shut down an orbstack VM and optionally delete it
 if ! orbctl list|grep -q ^dev8
 then

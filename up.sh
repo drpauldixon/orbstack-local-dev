@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Start and connect to an orbstack VM
 
 if ! orbctl list | grep -q ^dev8
