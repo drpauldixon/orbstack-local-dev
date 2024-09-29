@@ -1,5 +1,5 @@
 ---
-# Playbook to configre a web server
+# Playbook to configure a web server
 
 - hosts: web
   roles:
