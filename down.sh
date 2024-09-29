@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Shut down an orbstack VM and optionally delete it
+
 if ! orbctl list|grep -q ^dev8
 then
   echo "VM not found. You can start it by running ./up.sh"
