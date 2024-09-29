@@ -1,3 +1,6 @@
+#!/bin/bash
+# Start and connect to an orbstack VM
+
 if ! orbctl list | grep -q ^dev8
 then
   orb create rocky:8 dev8 -c vm_config.yaml
