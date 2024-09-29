@@ -1,0 +1,12 @@
+---
+# php handlers.yaml
+
+- name: restart apache
+  ansible.builtin.service:
+    name: httpd
+    state: restarted
+
+- name: restart php-fpm
+  ansible.builtin.service:
+    name: php-fpm
+    state: restarted

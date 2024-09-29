@@ -1,0 +1,9 @@
+---
+# php defaults
+php_role_enabled: yes
+php_version: 8.2
+php_remi_repo_rpm_gpg_key_file: RPM-GPG-KEY-remi
+php_remi_repo_rpm_gpg_key_fingerprint: 2a0948e4-659d106d
+
+# Install remi-repo? Only install in localdev
+php_install_remi_repo: no

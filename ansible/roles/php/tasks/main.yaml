@@ -1,0 +1,17 @@
+---
+# php tasks/main.yaml
+
+# Install Apache
+- name: Install and configure apache
+  import_tasks: apache.yaml
+  tags:
+    php
+    php.apache
+    php.apache.apache_tasks
+
+# Install PHP
+- name: Install and configure php
+  import_tasks: php.yaml
+  tags:
+    php
+    php.apache_tasks

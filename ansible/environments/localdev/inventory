@@ -1,0 +1,4 @@
+; Web servers
+
+[web]
+web1 ansible_connection=local

@@ -1,0 +1,23 @@
+---
+extends: default
+
+rules:
+  braces:
+    min-spaces-inside: 1
+    max-spaces-inside: 1
+    min-spaces-inside-empty: 0
+    max-spaces-inside-empty: 0
+  brackets:
+    min-spaces-inside: 1
+    max-spaces-inside: 1
+    min-spaces-inside-empty: 0
+    max-spaces-inside-empty: 0
+  line-length:
+    max: 4096
+    allow-non-breakable-words: true
+    allow-non-breakable-inline-mappings: false
+  indentation:
+    spaces: 2
+    indent-sequences: true
+    check-multi-line-strings: false
+  truthy: disable

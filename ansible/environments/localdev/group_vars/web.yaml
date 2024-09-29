@@ -1,0 +1,5 @@
+---
+# localdev web.yaml
+
+# PHP settings
+php_install_remi_repo: yes

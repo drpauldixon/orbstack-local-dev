@@ -1,0 +1,21 @@
+---
+# php tasks/apache.yaml
+
+- name: Install Apache (httpd)
+  ansible.builtin.package:
+    name: httpd
+    state: present
+  tags:
+    php
+    php.apache
+    php.apache.install_apache
+
+- name: Enable httpd service
+  ansible.builtin.service:
+    name: httpd
+    enabled: yes
+    state: started
+  tags:
+    php
+    php.apache
+    php.apache.enable_service

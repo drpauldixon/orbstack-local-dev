@@ -1,0 +1,5 @@
+---
+# vars for php 8.2
+php_remi_repo: https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+php_module: remi-7.4
+php_composer_module: 2

@@ -1,0 +1,6 @@
+# Playbook to build a web server
+
+---
+- hosts: web
+  roles:
+    - { role: php, when: php_role_enabled }
