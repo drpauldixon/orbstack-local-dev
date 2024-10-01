@@ -1,6 +1,6 @@
 ---
 # Playbook to configure a web server
 
-- hosts: web
+- hosts: web_server
   roles:
     - { role: php, when: php_role_enabled }

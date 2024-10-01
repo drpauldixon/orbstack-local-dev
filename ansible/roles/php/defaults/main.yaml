@@ -2,6 +2,12 @@
 # php defaults
 php_role_enabled: yes
 php_version: 8.2
+
+# Prefix when enabling the dnf module for php
+# The module is set to use php:<prefix>8.2
+# Setting this to an empty string will enable appstream version of PHP
+# php_module_prefix: ""
+php_module_prefix: "remi-"
 php_remi_repo_rpm_gpg_key_file: RPM-GPG-KEY-remi
 php_remi_repo_rpm_gpg_key_fingerprint: 2a0948e4-659d106d
 

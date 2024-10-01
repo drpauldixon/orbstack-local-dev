@@ -6,33 +6,65 @@
     file: php82.yaml
   when: php_version == 8.2
   tags:
-    php
-    php.php82_variables
+    - php
+    - php.php
+    - php.variables
+    - php.php82_variables
 
 - name: Include variables for php 7.4
   ansible.builtin.include_vars:
     file: php74.yaml
   when: php_version == 7.4
   tags:
-    php
-    php.php74_variables
+    - php
+    - php.php
+    - php.variables
+    - php.php74_variables
 
 - name: Install remi-repo (local dev only)
   import_tasks: remi_repo.yaml
   when: php_install_remi_repo is true
   tags:
-    php
-    php.remi_repo
+    - php
+    - php.php
+    - php.remi_repo
 
-- name: Install php-fpm
+- name: Set php version to use (dnf module)
+  ansible.builtin.template:
+    src: php.module.j2
+    dest: /etc/dnf/modules.d/php.module
+    owner: root
+    group: root
+    mode: 0644
+  tags:
+    - php
+    - php.php
+    - php.set_php_module_version
+
+- name: Install php packages
   ansible.builtin.package:
-    name: php-fpm
+    name: "{{ php_packages_to_install }}"
     state: present
   notify:
     - restart apache
   tags:
-    php
-    php.install_php_fpm
+    - php
+    - php.php
+    - php.install_php_fpm
+
+- name: Deploy php-fpm config www.conf
+  ansible.builtin.template:
+    src: www.conf.j2
+    dest: /etc/php-fpm.d/www.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+    restart php-fpm
+  tags:
+    - php
+    - php.php
+    - php.deploy_fpm_www_conf
 
 - name: Deploy index.php
   ansible.builtin.copy:
@@ -42,8 +74,9 @@
     owner: root
     group: root
   tags:
-    php
-    php.install_index_php
+    - php
+    - php.php
+    - php.install_index_php
 
 - name: Enable php-fpm service
   ansible.builtin.service:
@@ -51,5 +84,6 @@
     enabled: yes
     state: started
   tags:
-    php
-    php.enable_fpm_service
+    - php
+    - php.php
+    - php.enable_fpm_service

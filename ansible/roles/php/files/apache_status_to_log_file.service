@@ -1,0 +1,8 @@
+[Unit]
+Description="Export Apache server-status to a log file"
+
+[Service]
+ExecStart=php /etc/helpers/apache_status_to_log_file.php
+
+# Files are created with mode 0644
+UMask=0022

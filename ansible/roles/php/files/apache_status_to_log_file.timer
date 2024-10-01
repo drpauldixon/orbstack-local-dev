@@ -1,0 +1,11 @@
+[Unit]
+Description="Run apache_status_to_log_file service every minute
+Requires=httpd.service
+After=httpd.service
+
+[Timer]
+OnCalendar=*-*-* *:*:00
+Unit=apache_status_to_log_file.service
+
+[Install]
+WantedBy=multi-user.target

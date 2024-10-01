@@ -1,0 +1,13 @@
+[Unit]
+Description="Run php_fpm_status_to_log_file service every minute
+Requires=httpd.service
+Requires=php-fpm.service
+After=httpd.service
+After=php-fpm.service
+
+[Timer]
+OnCalendar=*-*-* *:*:00
+Unit=php_fpm_status_to_log_file.service
+
+[Install]
+WantedBy=multi-user.target

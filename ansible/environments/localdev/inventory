@@ -1,4 +1,11 @@
 ; Web servers
 
-[web]
+[web_server:children]
+web_server_php8
+web_server_php7
+
+[web_server_php8]
 web1 ansible_connection=local
+
+[web_server_php7]
+# add hosts here

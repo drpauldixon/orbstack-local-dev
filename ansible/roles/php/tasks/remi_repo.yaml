@@ -9,36 +9,24 @@
     owner: root
     group: root
   tags:
-    php
-    php.remirepo
-    php.remirepo.deploy_gpg_key
+    - php
+    - php.remirepo
+    - php.remirepo.deploy_gpg_key
 
 - name: Import remi gpg key
   ansible.builtin.rpm_key:
     key: "/etc/rpm/{{ php_remi_repo_rpm_gpg_key_file }}"
     state: present
   tags:
-    php
-    php.remirepo
-    php.remirepo.import_gpg_key
+    - php
+    - php.remirepo
+    - php.remirepo.import_gpg_key
 
 - name: Install remi-repo
   ansible.builtin.dnf:
     name: "{{ php_remi_repo }}"
     state: present
   tags:
-    php
-    php.remirepo
-    php.remirepo.install_remirepo
-
-- name: Set default php versiom (dnf module)
-  ansible.builtin.template:
-    src: php.module.j2
-    dest: /etc/dnf/modules.d/php.module
-    owner: root
-    group: root
-    mode: 0644
-  tags:
-    php
-    php.remirepo
-    php.remirepo.enable_dnf_module
+    - php
+    - php.remirepo
+    - php.remirepo.install_remirepo

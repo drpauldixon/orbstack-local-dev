@@ -6,9 +6,23 @@
     name: httpd
     state: present
   tags:
-    php
-    php.apache
-    php.apache.install_apache
+    - php
+    - php.apache
+    - php.apache.install_apache
+
+- name: Deploy server-status / php-fpm status config
+  ansible.builtin.copy:
+    src: "z-status.conf"
+    dest: "/etc/httpd/conf.d/z-status.conf"
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+    - restart apache
+  tags:
+    - php
+    - php.apache
+    - php.apache.deploy_status_config
 
 - name: Enable httpd service
   ansible.builtin.service:
@@ -16,6 +30,6 @@
     enabled: yes
     state: started
   tags:
-    php
-    php.apache
-    php.apache.enable_service
+    - php
+    - php.apache
+    - php.apache.enable_service

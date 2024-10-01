@@ -1,17 +1,73 @@
 ---
 # php tasks/main.yaml
 
-# Install Apache
+# Install and configure Apache
 - name: Install and configure apache
   import_tasks: apache.yaml
   tags:
-    php
-    php.apache
-    php.apache.apache_tasks
+    - php
+    - php.apache
+    - php.apache.apache_tasks
 
-# Install PHP
+# Install and configure PHP
 - name: Install and configure php
   import_tasks: php.yaml
   tags:
-    php
-    php.apache_tasks
+    - php
+    - php.php
+    - php.php_tasks
+
+# Create helper script directory to store script which convert metrics to log files
+- name: Create direcrtory to hold custom scripts
+  ansible.builtin.file:
+    path: /etc/helpers
+    state: directory
+    mode: '0755'
+  tags:
+    - php
+    - php.helpers
+    - php.helpers.create_helpers_directory
+
+- name: Deploy helper scripts that write apache/php-fpm stats to a log file
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc/helpers/{{ item }}"
+    mode: 0644
+    owner: root
+    group: root
+  loop:
+    - apache_status_to_log_file.php
+    - php_fpm_status_to_log_file.php
+  tags:
+    - php
+    - php.helpers
+    - php.helpers.deploy_helper_scripts
+
+- name: Install systemd timers to run apache/php-fpm status to log scripts every minute
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc/systemd/system/{{ item }}"
+  loop:
+    - apache_status_to_log_file.service
+    - apache_status_to_log_file.timer
+    - php_fpm_status_to_log_file.service
+    - php_fpm_status_to_log_file.timer
+  notify:
+    - systemd daemon reload
+  tags:
+    - php
+    - php.helpers
+    - php.deploy_systemd_timers_and_services
+
+- name: Enable systemd timers to run apache/php-fpm status to log scripts every minute
+  ansible.builtin.service:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  loop:
+    - apache_status_to_log_file.timer
+    - php_fpm_status_to_log_file.timer
+  tags:
+    - php
+    - php.helpers
+    - php.enable_systemd_timers
