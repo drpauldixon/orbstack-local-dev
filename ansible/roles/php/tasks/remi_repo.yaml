@@ -17,6 +17,7 @@
   ansible.builtin.rpm_key:
     key: "/etc/rpm/{{ php_remi_repo_rpm_gpg_key_file }}"
     state: present
+  when: not ansible_check_mode
   tags:
     - php
     - php.remirepo

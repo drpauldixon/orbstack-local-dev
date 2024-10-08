@@ -1,7 +1,18 @@
 ---
-# vars for php 8.2
-php_remi_repo: https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+# vars for php 7.4
+
+# Overrides from defaults
+php_use_module: no
+php_etc_dir: /etc/opt/remi/php74
+php_fpm_service: "php74-php-fpm.service"
+php_fpm_pool_template: php74-www.conf.j2
+php_fpm_socket_path: /var/opt/remi/php74/run/php-fpm/www.sock
+
+# This is for when we need to create a
+# symlink of the form: /usr/bin/php -> /usr/bin/php74
+php_symlink_cli: yes
+php_symlink_to: /usr/bin/php74
 php_packages_to_install:
-  - php-fpm
-  - php-cli
-  - php-json
+  - php74-php-fpm
+  - php74-php-cli
+  - php74-php-json

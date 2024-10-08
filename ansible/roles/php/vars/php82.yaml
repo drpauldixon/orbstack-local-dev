@@ -1,6 +1,5 @@
 ---
 # vars for php 8.2
-php_remi_repo: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
 php_packages_to_install:
   - php-fpm
   - php-cli

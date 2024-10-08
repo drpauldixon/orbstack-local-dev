@@ -5,12 +5,15 @@
   ansible.builtin.service:
     name: httpd
     state: restarted
+  when: not ansible_check_mode
 
 - name: restart php-fpm
   ansible.builtin.service:
-    name: php-fpm
+    name: "{{ php_fpm_service }}"
     state: restarted
+  when: not ansible_check_mode
 
 - name: systemd daemon reload
   ansible.builtin.systemd_service:
     daemon_reload: true
+  when: not ansible_check_mode

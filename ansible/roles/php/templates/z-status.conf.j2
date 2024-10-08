@@ -6,5 +6,5 @@ Listen 127.0.0.1:8080
 
 <LocationMatch "/xx-fpm.status">
   Require local
-  ProxyPass "unix:/run/php-fpm/www.sock|fcgi://localhost/fpm-status"
+  ProxyPass "unix:{{ php_fpm_socket_path }}|fcgi://localhost/fpm-status"
 </LocationMatch>

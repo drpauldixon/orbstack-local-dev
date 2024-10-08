@@ -44,7 +44,7 @@
     - php.helpers.deploy_helper_scripts
 
 - name: Install systemd timers to run apache/php-fpm status to log scripts every minute
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "/etc/systemd/system/{{ item }}"
   loop:
@@ -67,6 +67,7 @@
   loop:
     - apache_status_to_log_file.timer
     - php_fpm_status_to_log_file.timer
+  when: not ansible_check_mode
   tags:
     - php
     - php.helpers

@@ -2,14 +2,25 @@
 # php defaults
 php_role_enabled: yes
 php_version: 8.2
+php_etc_dir: /etc
+php_fpm_service: "php-fpm.service"
+php_fpm_pool_template: php82-www.conf.j2
+php_symlink_cli: no
+php_fpm_socket_path: "/run/php-fpm/www.sock"
+
+# define when needed: e.g. to symlink /usr/bin/php82 -> /usr/bin/php
+# when not using the module
+# php_symlink_to: /usr/bin/php82
 
 # Prefix when enabling the dnf module for php
 # The module is set to use php:<prefix>8.2
 # Setting this to an empty string will enable appstream version of PHP
 # php_module_prefix: ""
+php_use_module: yes
 php_module_prefix: "remi-"
 php_remi_repo_rpm_gpg_key_file: RPM-GPG-KEY-remi
 php_remi_repo_rpm_gpg_key_fingerprint: 2a0948e4-659d106d
 
 # Install remi-repo? Only install in localdev
 php_install_remi_repo: no
+php_remi_repo: https://rpms.remirepo.net/enterprise/remi-release-8.rpm

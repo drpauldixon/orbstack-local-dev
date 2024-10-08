@@ -8,4 +8,4 @@ web_server_php7
 web1 ansible_connection=local
 
 [web_server_php7]
-# add hosts here
+web2 ansible_connection=local

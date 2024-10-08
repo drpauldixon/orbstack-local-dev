@@ -1,9 +1,9 @@
 [Unit]
 Description="Run php_fpm_status_to_log_file service every minute
 Requires=httpd.service
-Requires=php-fpm.service
+Requires={{ php_fpm_service }}
 After=httpd.service
-After=php-fpm.service
+After={{ php_fpm_service }}
 
 [Timer]
 OnCalendar=*-*-* *:*:00

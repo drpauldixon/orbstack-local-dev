@@ -36,6 +36,7 @@
     owner: root
     group: root
     mode: 0644
+  when: php_use_module
   tags:
     - php
     - php.php
@@ -47,15 +48,42 @@
     state: present
   notify:
     - restart apache
+  when: not ansible_check_mode
   tags:
     - php
     - php.php
-    - php.install_php_fpm
+    - php.install_php
 
-- name: Deploy php-fpm config www.conf
+# This is for when we install phpX-php packages (when not using the module)
+- name: symlink cli phpXX to /usr/bin/php
+  ansible.builtin.file:
+    src: "{{ php_symlink_to }}"
+    dest: /usr/bin/php
+    owner: root
+    group: root
+    state: link
+  when: php_symlink_cli
+  tags:
+    - php
+    - php.php
+    - php.symlink_cli
+
+- name: Create /var/log/php-fpm directory
+  ansible.builtin.file:
+    path: /var/log/php-fpm
+    state: directory
+    owner: apache
+    group: root
+    mode: 0770
+  tags:
+    - php
+    - php.php
+    - php.create_php_fpm_log_directory
+
+- name: Deploy php-fpm pool config www.conf
   ansible.builtin.template:
-    src: www.conf.j2
-    dest: /etc/php-fpm.d/www.conf
+    src: "{{ php_fpm_pool_template }}"
+    dest: "{{ php_etc_dir }}/php-fpm.d/www.conf"
     mode: 0644
     owner: root
     group: root
@@ -65,6 +93,20 @@
     - php
     - php.php
     - php.deploy_fpm_www_conf
+
+- name: Deploy server-status / php-fpm status config
+  ansible.builtin.template:
+    src: "z-status.conf.j2"
+    dest: "/etc/httpd/conf.d/z-status.conf"
+    mode: 0644
+    owner: root
+    group: root
+  notify:
+    - restart apache
+  tags:
+    - php
+    - php.php
+    - php.deploy_apache_fpm_status_config
 
 - name: Deploy index.php
   ansible.builtin.copy:
@@ -80,9 +122,10 @@
 
 - name: Enable php-fpm service
   ansible.builtin.service:
-    name: php-fpm
+    name: "{{ php_fpm_service }}"
     enabled: yes
     state: started
+  when: not ansible_check_mode
   tags:
     - php
     - php.php
